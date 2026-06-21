@@ -1,0 +1,2111 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SilioMind — Engineering Intelligence for Science, Software, and Discovery</title>
+    <meta name="description" content="SilioMind builds AI systems, scientific software, and bioinformatics solutions that empower researchers, innovators, startups, and enterprises.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Sora:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        background: '#09090B',
+                        surface: '#111827',
+                        accent: '#3B82F6',
+                        cyan: '#06B6D4',
+                        purple: '#8B5CF6',
+                        muted: '#94A3B8',
+                    },
+                    fontFamily: {
+                        heading: ['Space Grotesk', 'Sora', 'sans-serif'],
+                        body: ['Inter', 'sans-serif'],
+                        display: ['Sora', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        :root {
+            --bg-primary: #09090B;
+            --bg-secondary: #111827;
+            --accent: #3B82F6;
+            --cyan: #06B6D4;
+            --purple: #8B5CF6;
+            --text-primary: #FFFFFF;
+            --text-muted: #94A3B8;
+            --glass: rgba(17, 24, 39, 0.6);
+            --glass-border: rgba(59, 130, 246, 0.1);
+        }
+
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-primary); }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+        /* Typography */
+        .font-heading { font-family: 'Space Grotesk', sans-serif; }
+        .font-display { font-family: 'Sora', sans-serif; }
+        .font-body { font-family: 'Inter', sans-serif; }
+
+        /* Glassmorphism */
+        .glass {
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+        }
+
+        .glass-strong {
+            background: rgba(17, 24, 39, 0.85);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(59, 130, 246, 0.15);
+        }
+
+        /* Glow Effects */
+        .glow-blue {
+            box-shadow: 0 0 40px rgba(59, 130, 246, 0.15), 0 0 80px rgba(59, 130, 246, 0.05);
+        }
+
+        .glow-cyan {
+            box-shadow: 0 0 40px rgba(6, 182, 212, 0.15), 0 0 80px rgba(6, 182, 212, 0.05);
+        }
+
+        .glow-purple {
+            box-shadow: 0 0 40px rgba(139, 92, 246, 0.15), 0 0 80px rgba(139, 92, 246, 0.05);
+        }
+
+        .text-glow {
+            text-shadow: 0 0 40px rgba(59, 130, 246, 0.3);
+        }
+
+        /* Animated Grid Background */
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(59, 130, 246, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 60px 60px; }
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(2deg); }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 0.4; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        @keyframes gradient-shift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-float-slow { animation: floatSlow 8s ease-in-out infinite; }
+        .animate-pulse-glow { animation: pulse-glow 4s ease-in-out infinite; }
+        .animate-gradient {
+            background-size: 200% 200%;
+            animation: gradient-shift 8s ease infinite;
+        }
+
+        /* Scroll Reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
+
+        /* Card Hover Effects */
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            border-color: rgba(59, 130, 246, 0.3);
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.1), 0 0 40px rgba(59, 130, 246, 0.05);
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(135deg, #3B82F6, #06B6D4);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-primary:hover::before { left: 100%; }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-secondary {
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(59, 130, 246, 0.5);
+            background: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Neural Network Canvas */
+        #neural-canvas {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        /* DNA Helix Animation */
+        .dna-container {
+            perspective: 1000px;
+        }
+
+        .dna-strand {
+            animation: rotateDNA 20s linear infinite;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes rotateDNA {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+
+        /* Particle System */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Gradient Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: orbFloat 10s ease-in-out infinite;
+        }
+
+        @keyframes orbFloat {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        /* Timeline */
+        .timeline-line {
+            background: linear-gradient(to bottom, #3B82F6, #06B6D4, #8B5CF6);
+        }
+
+        .timeline-dot {
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        }
+
+        /* FAQ Accordion */
+        .faq-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .faq-item.active .faq-content {
+            max-height: 500px;
+            opacity: 1;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Counter Animation */
+        .counter {
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Logo Grayscale */
+        .logo-gray {
+            filter: grayscale(100%) brightness(0.7);
+            transition: all 0.3s ease;
+        }
+
+        .logo-gray:hover {
+            filter: grayscale(0%) brightness(1);
+        }
+
+        /* Tech Stack Card */
+        .tech-card {
+            transition: all 0.3s ease;
+        }
+
+        .tech-card:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: rgba(59, 130, 246, 0.4);
+            box-shadow: 0 0 30px rgba(59, 130, 246, 0.1);
+        }
+
+        /* Process Step */
+        .process-step {
+            transition: all 0.4s ease;
+        }
+
+        .process-step:hover {
+            transform: translateX(10px);
+        }
+
+        /* Blog Card Image */
+        .blog-img {
+            transition: transform 0.5s ease;
+        }
+
+        .blog-card:hover .blog-img {
+            transform: scale(1.05);
+        }
+
+        /* Navigation */
+        .nav-link {
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; left: 0;
+            width: 0; height: 2px;
+            background: linear-gradient(90deg, #3B82F6, #06B6D4);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after { width: 100%; }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .mobile-menu.open { transform: translateX(0); }
+
+        /* Custom Selection */
+        ::selection {
+            background: rgba(59, 130, 246, 0.3);
+            color: white;
+        }
+
+        /* Smooth Parallax Container */
+        .parallax-container {
+            transform-style: preserve-3d;
+        }
+
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #3B82F6, #06B6D4, #8B5CF6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Animated Border */
+        .animated-border {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .animated-border::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px;
+            right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, #3B82F6, #06B6D4, #8B5CF6, #3B82F6);
+            background-size: 400% 400%;
+            animation: gradient-shift 3s ease infinite;
+            z-index: -1;
+            border-radius: inherit;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .animated-border:hover::before { opacity: 1; }
+
+        /* Case Study Chart Bars */
+        .chart-bar {
+            transition: height 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Testimonial Quote */
+        .quote-mark {
+            font-size: 6rem;
+            line-height: 1;
+            opacity: 0.1;
+            font-family: 'Sora', serif;
+        }
+
+        /* Section Divider */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.3), transparent);
+        }
+
+        /* Hide scrollbar for horizontal scroll */
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Stagger children animation */
+        .stagger-children > * {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .stagger-children.active > * {
+            animation: staggerIn 0.6s ease forwards;
+        }
+
+        .stagger-children.active > *:nth-child(1) { animation-delay: 0.05s; }
+        .stagger-children.active > *:nth-child(2) { animation-delay: 0.1s; }
+        .stagger-children.active > *:nth-child(3) { animation-delay: 0.15s; }
+        .stagger-children.active > *:nth-child(4) { animation-delay: 0.2s; }
+        .stagger-children.active > *:nth-child(5) { animation-delay: 0.25s; }
+        .stagger-children.active > *:nth-child(6) { animation-delay: 0.3s; }
+
+        @keyframes staggerIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Typography */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem !important; }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body class="bg-background text-white antialiased">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-cyan flex items-center justify-center glow-blue group-hover:scale-110 transition-transform">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                        </svg>
+                    </div>
+                    <span class="font-display font-bold text-xl tracking-tight">SilioMind</span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <div class="hidden lg:flex items-center gap-8">
+                    <a href="#home" class="nav-link text-sm font-medium text-muted hover:text-white transition-colors">Home</a>
+                    <a href="#services" class="nav-link text-sm font-medium text-muted hover:text-white transition-colors">Services</a>
+                    <a href="#solutions" class="nav-link text-sm font-medium text-muted hover:text-white transition-colors">Solutions</a>
+                    <a href="#technologies" class="nav-link text-sm font-medium text-muted hover:text-white transition-colors">Technologies</a>
+                    <a href="#research" class="nav-link text-sm font-medium text-muted hover:text-white transition-colors">Research</a>
+                    <a href="#about" class="nav-link text-sm font-medium text-muted hover:text-white transition-colors">About</a>
+                    <a href="#blog" class="nav-link text-sm font-medium text-muted hover:text-white transition-colors">Blog</a>
+                    <a href="#contact" class="nav-link text-sm font-medium text-muted hover:text-white transition-colors">Contact</a>
+                </div>
+
+                <!-- Right Side -->
+                <div class="hidden lg:flex items-center gap-4">
+                    <button id="theme-toggle" class="p-2 rounded-lg hover:bg-white/5 transition-colors">
+                        <svg class="w-5 h-5 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                        </svg>
+                    </button>
+                    <a href="#contact" class="btn-primary px-6 py-2.5 rounded-xl text-sm font-semibold text-white">
+                        Book a Meeting
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg hover:bg-white/5 transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-80 bg-surface border-l border-white/10 z-50 p-8 lg:hidden">
+            <button id="close-menu" class="absolute top-6 right-6 p-2 rounded-lg hover:bg-white/5 transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+            <div class="mt-16 flex flex-col gap-6">
+                <a href="#home" class="text-lg font-medium text-muted hover:text-white transition-colors">Home</a>
+                <a href="#services" class="text-lg font-medium text-muted hover:text-white transition-colors">Services</a>
+                <a href="#solutions" class="text-lg font-medium text-muted hover:text-white transition-colors">Solutions</a>
+                <a href="#technologies" class="text-lg font-medium text-muted hover:text-white transition-colors">Technologies</a>
+                <a href="#research" class="text-lg font-medium text-muted hover:text-white transition-colors">Research</a>
+                <a href="#about" class="text-lg font-medium text-muted hover:text-white transition-colors">About</a>
+                <a href="#blog" class="text-lg font-medium text-muted hover:text-white transition-colors">Blog</a>
+                <a href="#contact" class="text-lg font-medium text-muted hover:text-white transition-colors">Contact</a>
+                <a href="#contact" class="btn-primary px-6 py-3 rounded-xl text-center font-semibold text-white mt-4">Book a Meeting</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <!-- Background Effects -->
+        <div class="absolute inset-0 grid-bg"></div>
+        <canvas id="neural-canvas"></canvas>
+
+        <!-- Gradient Orbs -->
+        <div class="orb w-96 h-96 bg-accent/20 top-20 -left-20" style="animation-delay: 0s;"></div>
+        <div class="orb w-80 h-80 bg-purple/20 top-40 right-0" style="animation-delay: 2s;"></div>
+        <div class="orb w-64 h-64 bg-cyan/20 bottom-20 left-1/3" style="animation-delay: 4s;"></div>
+
+        <!-- Floating Particles Container -->
+        <div id="particles-container" class="absolute inset-0 pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-20">
+            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass mb-8 reveal">
+                        <span class="w-2 h-2 rounded-full bg-accent animate-pulse"></span>
+                        <span class="text-sm text-muted font-medium">Next-Gen AI & Scientific Computing</span>
+                    </div>
+
+                    <h1 class="hero-title font-display font-bold text-5xl lg:text-7xl leading-tight mb-6 reveal reveal-delay-1">
+                        Engineering <span class="gradient-text">Intelligence</span> for Science, Software, and Discovery
+                    </h1>
+
+                    <p class="text-lg text-muted max-w-2xl mx-auto lg:mx-0 mb-10 reveal reveal-delay-2">
+                        SilioMind builds AI systems, scientific software, and bioinformatics solutions that empower researchers, innovators, startups, and enterprises.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start reveal reveal-delay-3">
+                        <a href="#solutions" class="btn-primary px-8 py-4 rounded-xl font-semibold text-white text-center">
+                            Explore Solutions
+                        </a>
+                        <a href="#contact" class="btn-secondary px-8 py-4 rounded-xl font-semibold text-white text-center">
+                            Schedule Consultation
+                        </a>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-8 mt-16 reveal reveal-delay-4">
+                        <div>
+                            <div class="text-3xl font-display font-bold gradient-text">100+</div>
+                            <div class="text-sm text-muted mt-1">Projects Delivered</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-display font-bold gradient-text">99.9%</div>
+                            <div class="text-sm text-muted mt-1">Uptime Reliability</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-display font-bold gradient-text">20+</div>
+                            <div class="text-sm text-muted mt-1">Core Technologies</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Visual -->
+                <div class="relative hidden lg:block">
+                    <div class="relative w-full aspect-square max-w-lg mx-auto">
+                        <!-- DNA Helix SVG -->
+                        <svg class="absolute inset-0 w-full h-full animate-float-slow" viewBox="0 0 400 400" fill="none">
+                            <defs>
+                                <linearGradient id="dnaGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:0.8" />
+                                    <stop offset="100%" style="stop-color:#06B6D4;stop-opacity:0.8" />
+                                </linearGradient>
+                                <linearGradient id="dnaGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:0.8" />
+                                    <stop offset="100%" style="stop-color:#3B82F6;stop-opacity:0.8" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Strand 1 -->
+                            <path d="M100,50 Q200,100 100,150 Q200,200 100,250 Q200,300 100,350" 
+                                  stroke="url(#dnaGrad1)" stroke-width="3" fill="none" opacity="0.6"/>
+                            <!-- Strand 2 -->
+                            <path d="M300,50 Q200,100 300,150 Q200,200 300,250 Q200,300 300,350" 
+                                  stroke="url(#dnaGrad2)" stroke-width="3" fill="none" opacity="0.6"/>
+                            <!-- Rungs -->
+                            <line x1="130" y1="75" x2="270" y2="75" stroke="rgba(59,130,246,0.3)" stroke-width="2"/>
+                            <line x1="130" y1="125" x2="270" y2="125" stroke="rgba(6,182,212,0.3)" stroke-width="2"/>
+                            <line x1="130" y1="175" x2="270" y2="175" stroke="rgba(139,92,246,0.3)" stroke-width="2"/>
+                            <line x1="130" y1="225" x2="270" y2="225" stroke="rgba(59,130,246,0.3)" stroke-width="2"/>
+                            <line x1="130" y1="275" x2="270" y2="275" stroke="rgba(6,182,212,0.3)" stroke-width="2"/>
+                            <line x1="130" y1="325" x2="270" y2="325" stroke="rgba(139,92,246,0.3)" stroke-width="2"/>
+                            <!-- Nodes -->
+                            <circle cx="100" cy="50" r="8" fill="#3B82F6" opacity="0.8"/>
+                            <circle cx="300" cy="50" r="8" fill="#8B5CF6" opacity="0.8"/>
+                            <circle cx="100" cy="150" r="8" fill="#06B6D4" opacity="0.8"/>
+                            <circle cx="300" cy="150" r="8" fill="#3B82F6" opacity="0.8"/>
+                            <circle cx="100" cy="250" r="8" fill="#8B5CF6" opacity="0.8"/>
+                            <circle cx="300" cy="250" r="8" fill="#06B6D4" opacity="0.8"/>
+                            <circle cx="100" cy="350" r="8" fill="#3B82F6" opacity="0.8"/>
+                            <circle cx="300" cy="350" r="8" fill="#8B5CF6" opacity="0.8"/>
+                        </svg>
+
+                        <!-- Floating Cards -->
+                        <div class="absolute top-10 right-0 glass rounded-2xl p-4 animate-float glow-blue" style="animation-delay: 0.5s;">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-accent/20 flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold">AI Processing</div>
+                                    <div class="text-xs text-muted">Real-time inference</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="absolute bottom-20 left-0 glass rounded-2xl p-4 animate-float glow-cyan" style="animation-delay: 1.5s;">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-cyan/20 flex items-center justify-center">
+                                    <svg class="w-5 h-5 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="text-sm font-semibold">Bio Analysis</div>
+                                    <div class="text-xs text-muted">Genomic pipeline</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 opacity-50">
+            <span class="text-xs text-muted">Scroll to explore</span>
+            <div class="w-6 h-10 rounded-full border-2 border-muted/30 flex items-start justify-center p-2">
+                <div class="w-1.5 h-3 rounded-full bg-accent animate-bounce"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trusted By Section -->
+    <section class="py-20 border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <p class="text-center text-sm text-muted uppercase tracking-widest mb-10 reveal">Trusted by Leading Organizations</p>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center reveal">
+                <div class="flex items-center justify-center p-4 logo-gray">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        <span class="font-semibold text-lg">ResearchLabs</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center p-4 logo-gray">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/></svg>
+                        <span class="font-semibold text-lg">University</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center p-4 logo-gray">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>
+                        <span class="font-semibold text-lg">HealthOrg</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center p-4 logo-gray">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                        <span class="font-semibold text-lg">StartupX</span>
+                    </div>
+                </div>
+                <div class="flex items-center justify-center p-4 logo-gray">
+                    <div class="flex items-center gap-2">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        <span class="font-semibold text-lg">BioTech</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-accent text-sm font-semibold uppercase tracking-widest">What We Do</span>
+                <h2 class="font-display font-bold text-4xl lg:text-5xl mt-4 mb-6">Our Services</h2>
+                <p class="text-muted text-lg max-w-2xl mx-auto">Comprehensive solutions spanning AI, software engineering, bioinformatics, and scientific computing.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 stagger-children" id="services-grid">
+                <!-- AI Card -->
+                <div class="card-hover glass rounded-2xl p-8 group">
+                    <div class="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
+                        <svg class="w-7 h-7 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.813 15.904L9 18.75l-.813-2.846a4.002 4.002 0 00-3.09-3.09L2.25 12l2.846-.813a4.002 4.002 0 003.09-3.09L9 5.25l.813 2.846a4.002 4.002 0 003.09 3.09L15.75 12l-2.846.813a4.002 4.002 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display font-semibold text-xl mb-3">Artificial Intelligence</h3>
+                    <p class="text-muted text-sm mb-6">LLM Systems, AI Agents, RAG Applications, Computer Vision, and NLP solutions.</p>
+                    <a href="#" class="text-accent text-sm font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
+                        Learn More 
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                </div>
+
+                <!-- Software Engineering Card -->
+                <div class="card-hover glass rounded-2xl p-8 group">
+                    <div class="w-14 h-14 rounded-2xl bg-cyan/10 flex items-center justify-center mb-6 group-hover:bg-cyan/20 transition-colors">
+                        <svg class="w-7 h-7 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display font-semibold text-xl mb-3">Software Engineering</h3>
+                    <p class="text-muted text-sm mb-6">Backend Systems, APIs, Cloud Architecture, Microservices, and MLOps.</p>
+                    <a href="#" class="text-cyan text-sm font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
+                        Learn More
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                </div>
+
+                <!-- Bioinformatics Card -->
+                <div class="card-hover glass rounded-2xl p-8 group">
+                    <div class="w-14 h-14 rounded-2xl bg-purple/10 flex items-center justify-center mb-6 group-hover:bg-purple/20 transition-colors">
+                        <svg class="w-7 h-7 text-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display font-semibold text-xl mb-3">Bioinformatics</h3>
+                    <p class="text-muted text-sm mb-6">Genomics, Transcriptomics, Sequence Analysis, NGS Pipelines, and Data Visualization.</p>
+                    <a href="#" class="text-purple text-sm font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
+                        Learn More
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                </div>
+
+                <!-- Scientific Computing Card -->
+                <div class="card-hover glass rounded-2xl p-8 group">
+                    <div class="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
+                        <svg class="w-7 h-7 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"/>
+                        </svg>
+                    </div>
+                    <h3 class="font-display font-semibold text-xl mb-3">Scientific Computing</h3>
+                    <p class="text-muted text-sm mb-6">Simulation, Data Analysis, Statistical Modeling, Research Automation, and HPC.</p>
+                    <a href="#" class="text-accent text-sm font-medium flex items-center gap-2 group-hover:gap-3 transition-all">
+                        Learn More
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solutions Section -->
+    <section id="solutions" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-purple/5 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-20 reveal">
+                <span class="text-accent text-sm font-semibold uppercase tracking-widest">Solutions</span>
+                <h2 class="font-display font-bold text-4xl lg:text-5xl mt-4 mb-6">Built for Impact</h2>
+                <p class="text-muted text-lg max-w-2xl mx-auto">Tailored platforms and pipelines designed for scientific and enterprise excellence.</p>
+            </div>
+
+            <!-- Solution 1 -->
+            <div class="grid lg:grid-cols-2 gap-16 items-center mb-24 reveal">
+                <div class="order-2 lg:order-1">
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-accent/20 to-cyan/20 rounded-3xl blur-2xl opacity-50"></div>
+                        <div class="relative glass rounded-3xl p-8 glow-blue">
+                            <svg class="w-full h-64" viewBox="0 0 400 250" fill="none">
+                                <rect x="20" y="20" width="360" height="210" rx="12" fill="rgba(59,130,246,0.05)" stroke="rgba(59,130,246,0.2)" stroke-width="1"/>
+                                <circle cx="50" cy="50" r="8" fill="#3B82F6" opacity="0.8"/>
+                                <circle cx="80" cy="80" r="6" fill="#06B6D4" opacity="0.8"/>
+                                <circle cx="110" cy="60" r="10" fill="#8B5CF6" opacity="0.8"/>
+                                <circle cx="140" cy="90" r="7" fill="#3B82F6" opacity="0.8"/>
+                                <circle cx="170" cy="70" r="9" fill="#06B6D4" opacity="0.8"/>
+                                <path d="M50,50 Q80,80 110,60 Q140,90 170,70" stroke="url(#lineGrad)" stroke-width="2" fill="none" opacity="0.6"/>
+                                <defs>
+                                    <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#3B82F6"/>
+                                        <stop offset="100%" style="stop-color:#06B6D4"/>
+                                    </linearGradient>
+                                </defs>
+                                <rect x="200" y="40" width="160" height="30" rx="6" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.2)" stroke-width="1"/>
+                                <rect x="200" y="85" width="120" height="30" rx="6" fill="rgba(6,182,212,0.1)" stroke="rgba(6,182,212,0.2)" stroke-width="1"/>
+                                <rect x="200" y="130" width="140" height="30" rx="6" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.2)" stroke-width="1"/>
+                                <text x="220" y="60" fill="rgba(255,255,255,0.7)" font-size="12" font-family="Inter">Neural Network</text>
+                                <text x="220" y="105" fill="rgba(255,255,255,0.7)" font-size="12" font-family="Inter">Inference API</text>
+                                <text x="220" y="150" fill="rgba(255,255,255,0.7)" font-size="12" font-family="Inter">Data Pipeline</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <span class="text-accent text-sm font-semibold uppercase tracking-widest">01</span>
+                    <h3 class="font-display font-bold text-3xl mt-2 mb-4">AI Platforms</h3>
+                    <p class="text-muted mb-6">Custom AI assistants and intelligent systems that understand your domain. From LLM-powered research tools to autonomous AI agents, we build platforms that think with you.</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-3 text-sm text-muted">
+                            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Custom LLM fine-tuning and deployment
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-muted">
+                            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            RAG-based knowledge systems
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-muted">
+                            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Multi-agent orchestration
+                        </li>
+                    </ul>
+                    <a href="#" class="btn-secondary px-6 py-3 rounded-xl font-medium inline-flex items-center gap-2">
+                        Explore AI Solutions
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Solution 2 -->
+            <div class="grid lg:grid-cols-2 gap-16 items-center mb-24 reveal">
+                <div>
+                    <span class="text-cyan text-sm font-semibold uppercase tracking-widest">02</span>
+                    <h3 class="font-display font-bold text-3xl mt-2 mb-4">Scientific Platforms</h3>
+                    <p class="text-muted mb-6">Research software and data platforms built for the scientific method. Scalable, reproducible, and designed for collaboration across disciplines.</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-3 text-sm text-muted">
+                            <svg class="w-5 h-5 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Reproducible research environments
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-muted">
+                            <svg class="w-5 h-5 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Real-time data visualization
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-muted">
+                            <svg class="w-5 h-5 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Collaborative experiment tracking
+                        </li>
+                    </ul>
+                    <a href="#" class="btn-secondary px-6 py-3 rounded-xl font-medium inline-flex items-center gap-2">
+                        Explore Scientific Platforms
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                </div>
+                <div>
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-cyan/20 to-accent/20 rounded-3xl blur-2xl opacity-50"></div>
+                        <div class="relative glass rounded-3xl p-8 glow-cyan">
+                            <svg class="w-full h-64" viewBox="0 0 400 250" fill="none">
+                                <rect x="30" y="30" width="340" height="190" rx="12" fill="rgba(6,182,212,0.05)" stroke="rgba(6,182,212,0.2)" stroke-width="1"/>
+                                <!-- Chart Bars -->
+                                <rect x="60" y="140" width="30" height="60" rx="4" fill="rgba(59,130,246,0.6)"/>
+                                <rect x="100" y="110" width="30" height="90" rx="4" fill="rgba(6,182,212,0.6)"/>
+                                <rect x="140" y="80" width="30" height="120" rx="4" fill="rgba(139,92,246,0.6)"/>
+                                <rect x="180" y="120" width="30" height="80" rx="4" fill="rgba(59,130,246,0.6)"/>
+                                <rect x="220" y="90" width="30" height="110" rx="4" fill="rgba(6,182,212,0.6)"/>
+                                <rect x="260" y="130" width="30" height="70" rx="4" fill="rgba(139,92,246,0.6)"/>
+                                <!-- Line Graph -->
+                                <polyline points="75,160 115,130 155,100 195,150 235,110 275,140" fill="none" stroke="white" stroke-width="2" opacity="0.8"/>
+                                <circle cx="75" cy="160" r="4" fill="white"/>
+                                <circle cx="115" cy="130" r="4" fill="white"/>
+                                <circle cx="155" cy="100" r="4" fill="white"/>
+                                <circle cx="195" cy="150" r="4" fill="white"/>
+                                <circle cx="235" cy="110" r="4" fill="white"/>
+                                <circle cx="275" cy="140" r="4" fill="white"/>
+                                <!-- Labels -->
+                                <text x="60" y="220" fill="rgba(255,255,255,0.5)" font-size="10" font-family="Inter">Mon</text>
+                                <text x="100" y="220" fill="rgba(255,255,255,0.5)" font-size="10" font-family="Inter">Tue</text>
+                                <text x="140" y="220" fill="rgba(255,255,255,0.5)" font-size="10" font-family="Inter">Wed</text>
+                                <text x="180" y="220" fill="rgba(255,255,255,0.5)" font-size="10" font-family="Inter">Thu</text>
+                                <text x="220" y="220" fill="rgba(255,255,255,0.5)" font-size="10" font-family="Inter">Fri</text>
+                                <text x="260" y="220" fill="rgba(255,255,255,0.5)" font-size="10" font-family="Inter">Sat</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Solution 3 -->
+            <div class="grid lg:grid-cols-2 gap-16 items-center mb-24 reveal">
+                <div class="order-2 lg:order-1">
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-purple/20 to-accent/20 rounded-3xl blur-2xl opacity-50"></div>
+                        <div class="relative glass rounded-3xl p-8 glow-purple">
+                            <svg class="w-full h-64" viewBox="0 0 400 250" fill="none">
+                                <rect x="30" y="30" width="340" height="190" rx="12" fill="rgba(139,92,246,0.05)" stroke="rgba(139,92,246,0.2)" stroke-width="1"/>
+                                <!-- DNA Sequence -->
+                                <text x="50" y="70" fill="rgba(59,130,246,0.8)" font-size="16" font-family="monospace" font-weight="bold">ATCG</text>
+                                <text x="110" y="70" fill="rgba(6,182,212,0.8)" font-size="16" font-family="monospace" font-weight="bold">GCTA</text>
+                                <text x="170" y="70" fill="rgba(139,92,246,0.8)" font-size="16" font-family="monospace" font-weight="bold">ATCG</text>
+                                <text x="230" y="70" fill="rgba(59,130,246,0.8)" font-size="16" font-family="monospace" font-weight="bold">GCTA</text>
+                                <text x="290" y="70" fill="rgba(6,182,212,0.8)" font-size="16" font-family="monospace" font-weight="bold">ATCG</text>
+
+                                <text x="50" y="100" fill="rgba(6,182,212,0.8)" font-size="16" font-family="monospace" font-weight="bold">GCTA</text>
+                                <text x="110" y="100" fill="rgba(139,92,246,0.8)" font-size="16" font-family="monospace" font-weight="bold">ATCG</text>
+                                <text x="170" y="100" fill="rgba(59,130,246,0.8)" font-size="16" font-family="monospace" font-weight="bold">GCTA</text>
+                                <text x="230" y="100" fill="rgba(6,182,212,0.8)" font-size="16" font-family="monospace" font-weight="bold">ATCG</text>
+                                <text x="290" y="100" fill="rgba(139,92,246,0.8)" font-size="16" font-family="monospace" font-weight="bold">GCTA</text>
+
+                                <!-- Pipeline Steps -->
+                                <rect x="50" y="140" width="70" height="30" rx="6" fill="rgba(59,130,246,0.2)" stroke="rgba(59,130,246,0.4)" stroke-width="1"/>
+                                <text x="60" y="160" fill="white" font-size="10" font-family="Inter">Input</text>
+
+                                <line x1="120" y1="155" x2="150" y2="155" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="4"/>
+
+                                <rect x="150" y="140" width="70" height="30" rx="6" fill="rgba(6,182,212,0.2)" stroke="rgba(6,182,212,0.4)" stroke-width="1"/>
+                                <text x="160" y="160" fill="white" font-size="10" font-family="Inter">Process</text>
+
+                                <line x1="220" y1="155" x2="250" y2="155" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="4"/>
+
+                                <rect x="250" y="140" width="70" height="30" rx="6" fill="rgba(139,92,246,0.2)" stroke="rgba(139,92,246,0.4)" stroke-width="1"/>
+                                <text x="260" y="160" fill="white" font-size="10" font-family="Inter">Output</text>
+
+                                <!-- Progress Bar -->
+                                <rect x="50" y="200" width="300" height="8" rx="4" fill="rgba(255,255,255,0.1)"/>
+                                <rect x="50" y="200" width="240" height="8" rx="4" fill="url(#progressGrad)"/>
+                                <defs>
+                                    <linearGradient id="progressGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                        <stop offset="0%" style="stop-color:#3B82F6"/>
+                                        <stop offset="100%" style="stop-color:#8B5CF6"/>
+                                    </linearGradient>
+                                </defs>
+                                <text x="50" y="225" fill="rgba(255,255,255,0.5)" font-size="10" font-family="Inter">Pipeline Progress: 80%</text>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2">
+                    <span class="text-purple text-sm font-semibold uppercase tracking-widest">03</span>
+                    <h3 class="font-display font-bold text-3xl mt-2 mb-4">Bioinformatics Pipelines</h3>
+                    <p class="text-muted mb-6">Genome analysis and biological workflows that scale. From raw sequencing data to actionable insights, our pipelines automate the entire process.</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-3 text-sm text-muted">
+                            <svg class="w-5 h-5 text-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            End-to-end NGS analysis
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-muted">
+                            <svg class="w-5 h-5 text-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Variant calling and annotation
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-muted">
+                            <svg class="w-5 h-5 text-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Cloud-native workflow orchestration
+                        </li>
+                    </ul>
+                    <a href="#" class="btn-secondary px-6 py-3 rounded-xl font-medium inline-flex items-center gap-2">
+                        Explore Bioinformatics
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Solution 4 -->
+            <div class="grid lg:grid-cols-2 gap-16 items-center reveal">
+                <div>
+                    <span class="text-accent text-sm font-semibold uppercase tracking-widest">04</span>
+                    <h3 class="font-display font-bold text-3xl mt-2 mb-4">Enterprise Software</h3>
+                    <p class="text-muted mb-6">Scalable cloud-native applications built for mission-critical operations. Secure, compliant, and designed for millions of users.</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center gap-3 text-sm text-muted">
+                            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Microservices architecture
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-muted">
+                            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Auto-scaling Kubernetes clusters
+                        </li>
+                        <li class="flex items-center gap-3 text-sm text-muted">
+                            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            SOC2 and HIPAA compliance
+                        </li>
+                    </ul>
+                    <a href="#" class="btn-secondary px-6 py-3 rounded-xl font-medium inline-flex items-center gap-2">
+                        Explore Enterprise Solutions
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                    </a>
+                </div>
+                <div>
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-accent/20 to-cyan/20 rounded-3xl blur-2xl opacity-50"></div>
+                        <div class="relative glass rounded-3xl p-8 glow-blue">
+                            <svg class="w-full h-64" viewBox="0 0 400 250" fill="none">
+                                <rect x="30" y="30" width="340" height="190" rx="12" fill="rgba(59,130,246,0.05)" stroke="rgba(59,130,246,0.2)" stroke-width="1"/>
+                                <!-- Server Nodes -->
+                                <rect x="60" y="60" width="80" height="50" rx="6" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+                                <circle cx="75" cy="75" r="4" fill="#3B82F6"/>
+                                <circle cx="90" cy="75" r="4" fill="#3B82F6"/>
+                                <circle cx="105" cy="75" r="4" fill="#3B82F6"/>
+                                <rect x="70" y="90" width="40" height="4" rx="2" fill="rgba(59,130,246,0.5)"/>
+                                <rect x="70" y="98" width="30" height="4" rx="2" fill="rgba(59,130,246,0.3)"/>
+
+                                <rect x="160" y="60" width="80" height="50" rx="6" fill="rgba(6,182,212,0.15)" stroke="rgba(6,182,212,0.3)" stroke-width="1"/>
+                                <circle cx="175" cy="75" r="4" fill="#06B6D4"/>
+                                <circle cx="190" cy="75" r="4" fill="#06B6D4"/>
+                                <circle cx="205" cy="75" r="4" fill="#06B6D4"/>
+                                <rect x="170" y="90" width="40" height="4" rx="2" fill="rgba(6,182,212,0.5)"/>
+                                <rect x="170" y="98" width="30" height="4" rx="2" fill="rgba(6,182,212,0.3)"/>
+
+                                <rect x="260" y="60" width="80" height="50" rx="6" fill="rgba(139,92,246,0.15)" stroke="rgba(139,92,246,0.3)" stroke-width="1"/>
+                                <circle cx="275" cy="75" r="4" fill="#8B5CF6"/>
+                                <circle cx="290" cy="75" r="4" fill="#8B5CF6"/>
+                                <circle cx="305" cy="75" r="4" fill="#8B5CF6"/>
+                                <rect x="270" y="90" width="40" height="4" rx="2" fill="rgba(139,92,246,0.5)"/>
+                                <rect x="270" y="98" width="30" height="4" rx="2" fill="rgba(139,92,246,0.3)"/>
+
+                                <!-- Connection Lines -->
+                                <line x1="140" y1="85" x2="160" y2="85" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                                <line x1="240" y1="85" x2="260" y2="85" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                                <line x1="100" y1="110" x2="100" y2="130" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                                <line x1="200" y1="110" x2="200" y2="130" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                                <line x1="300" y1="110" x2="300" y2="130" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+
+                                <!-- Load Balancer -->
+                                <rect x="130" y="130" width="140" height="30" rx="6" fill="rgba(59,130,246,0.2)" stroke="rgba(59,130,246,0.4)" stroke-width="1"/>
+                                <text x="160" y="150" fill="white" font-size="10" font-family="Inter">Load Balancer</text>
+
+                                <!-- Database -->
+                                <rect x="160" y="180" width="80" height="30" rx="6" fill="rgba(139,92,246,0.2)" stroke="rgba(139,92,246,0.4)" stroke-width="1"/>
+                                <text x="175" y="200" fill="white" font-size="10" font-family="Inter">Database</text>
+                                <line x1="200" y1="160" x2="200" y2="180" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack Section -->
+    <section id="technologies" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-accent text-sm font-semibold uppercase tracking-widest">Our Stack</span>
+                <h2 class="font-display font-bold text-4xl lg:text-5xl mt-4 mb-6">Technology Stack</h2>
+                <p class="text-muted text-lg max-w-2xl mx-auto">Industry-leading technologies chosen for performance, reliability, and scalability.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 stagger-children" id="tech-grid">
+                <!-- AI & ML -->
+                <div class="tech-card glass rounded-2xl p-6">
+                    <h3 class="font-display font-semibold text-lg mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        AI & ML
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center text-accent font-bold text-xs">Py</div>
+                            <span class="text-sm font-medium">Python</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-cyan/20 flex items-center justify-center text-cyan font-bold text-xs">Pt</div>
+                            <span class="text-sm font-medium">PyTorch</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-purple/20 flex items-center justify-center text-purple font-bold text-xs">TF</div>
+                            <span class="text-sm font-medium">TensorFlow</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center text-accent font-bold text-xs">LC</div>
+                            <span class="text-sm font-medium">LangChain</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-cyan/20 flex items-center justify-center text-cyan font-bold text-xs">OA</div>
+                            <span class="text-sm font-medium">OpenAI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backend -->
+                <div class="tech-card glass rounded-2xl p-6">
+                    <h3 class="font-display font-semibold text-lg mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 01-2 2v4a2 2 0 012 2h14a2 2 0 012-2v-4a2 2 0 01-2-2m-2-4h.01M17 16h.01"/></svg>
+                        Backend
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center text-accent font-bold text-xs">FA</div>
+                            <span class="text-sm font-medium">FastAPI</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-cyan/20 flex items-center justify-center text-cyan font-bold text-xs">Dj</div>
+                            <span class="text-sm font-medium">Django</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-purple/20 flex items-center justify-center text-purple font-bold text-xs">Pg</div>
+                            <span class="text-sm font-medium">PostgreSQL</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center text-accent font-bold text-xs">Re</div>
+                            <span class="text-sm font-medium">Redis</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-cyan/20 flex items-center justify-center text-cyan font-bold text-xs">Gq</div>
+                            <span class="text-sm font-medium">GraphQL</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DevOps -->
+                <div class="tech-card glass rounded-2xl p-6">
+                    <h3 class="font-display font-semibold text-lg mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        DevOps
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center text-accent font-bold text-xs">Dk</div>
+                            <span class="text-sm font-medium">Docker</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-cyan/20 flex items-center justify-center text-cyan font-bold text-xs">K8</div>
+                            <span class="text-sm font-medium">Kubernetes</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-purple/20 flex items-center justify-center text-purple font-bold text-xs">Gh</div>
+                            <span class="text-sm font-medium">GitHub Actions</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center text-accent font-bold text-xs">Nx</div>
+                            <span class="text-sm font-medium">Nginx</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-cyan/20 flex items-center justify-center text-cyan font-bold text-xs">Pr</div>
+                            <span class="text-sm font-medium">Prometheus</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Scientific -->
+                <div class="tech-card glass rounded-2xl p-6">
+                    <h3 class="font-display font-semibold text-lg mb-4 flex items-center gap-2">
+                        <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                        Scientific
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center text-accent font-bold text-xs">Bp</div>
+                            <span class="text-sm font-medium">Biopython</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-cyan/20 flex items-center justify-center text-cyan font-bold text-xs">R</div>
+                            <span class="text-sm font-medium">R</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-purple/20 flex items-center justify-center text-purple font-bold text-xs">Sk</div>
+                            <span class="text-sm font-medium">Scikit-learn</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-accent/20 flex items-center justify-center text-accent font-bold text-xs">Np</div>
+                            <span class="text-sm font-medium">NumPy</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
+                            <div class="w-8 h-8 rounded-lg bg-cyan/20 flex items-center justify-center text-cyan font-bold text-xs">Pd</div>
+                            <span class="text-sm font-medium">Pandas</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research & Innovation Section -->
+    <section id="research" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-purple/5 via-transparent to-accent/5 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <span class="text-accent text-sm font-semibold uppercase tracking-widest">Research</span>
+                <h2 class="font-display font-bold text-4xl lg:text-5xl mt-4 mb-6">Transforming Research Through Intelligence</h2>
+                <p class="text-muted text-lg max-w-2xl mx-auto">Pushing the boundaries of what's possible at the intersection of AI and science.</p>
+            </div>
+
+            <!-- Research Cards -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 stagger-children" id="research-grid">
+                <div class="card-hover glass rounded-2xl p-8">
+                    <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                    </div>
+                    <h3 class="font-display font-semibold text-lg mb-2">Computational Biology</h3>
+                    <p class="text-muted text-sm">Advanced algorithms for protein folding, molecular dynamics, and systems biology.</p>
+                </div>
+
+                <div class="card-hover glass rounded-2xl p-8">
+                    <div class="w-12 h-12 rounded-xl bg-cyan/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.813 15.904L9 18.75l-.813-2.846a4.002 4.002 0 00-3.09-3.09L2.25 12l2.846-.813a4.002 4.002 0 003.09-3.09L9 5.25l.813 2.846a4.002 4.002 0 003.09 3.09L15.75 12l-2.846.813a4.002 4.002 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/></svg>
+                    </div>
+                    <h3 class="font-display font-semibold text-lg mb-2">Machine Learning Research</h3>
+                    <p class="text-muted text-sm">Novel architectures for scientific discovery and domain-specific model development.</p>
+                </div>
+
+                <div class="card-hover glass rounded-2xl p-8">
+                    <div class="w-12 h-12 rounded-xl bg-purple/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"/></svg>
+                    </div>
+                    <h3 class="font-display font-semibold text-lg mb-2">Scientific Visualization</h3>
+                    <p class="text-muted text-sm">Interactive tools for complex data exploration and 3D molecular rendering.</p>
+                </div>
+
+                <div class="card-hover glass rounded-2xl p-8">
+                    <div class="w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z"/></svg>
+                    </div>
+                    <h3 class="font-display font-semibold text-lg mb-2">Data-driven Discovery</h3>
+                    <p class="text-muted text-sm">Uncovering patterns in large-scale datasets using advanced statistical methods.</p>
+                </div>
+
+                <div class="card-hover glass rounded-2xl p-8">
+                    <div class="w-12 h-12 rounded-xl bg-cyan/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"/></svg>
+                    </div>
+                    <h3 class="font-display font-semibold text-lg mb-2">AI for Healthcare</h3>
+                    <p class="text-muted text-sm">Diagnostic assistance, drug discovery, and personalized treatment recommendations.</p>
+                </div>
+
+                <div class="card-hover glass rounded-2xl p-8">
+                    <div class="w-12 h-12 rounded-xl bg-purple/10 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6 text-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3m3 3a3 3 0 100 6h13.5a3 3 0 100-6m-16.5-3a3 3 0 013-3h13.5a3 3 0 013 3m-19.5 0a4.5 4.5 0 01.9-2.7L5.737 5.1a3.375 3.375 0 012.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 01.9 2.7"/></svg>
+                    </div>
+                    <h3 class="font-display font-semibold text-lg mb-2">Bioinformatics Pipelines</h3>
+                    <p class="text-muted text-sm">Automated workflows for genomic, transcriptomic, and proteomic analysis.</p>
+                </div>
+            </div>
+
+            <!-- Counters -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 reveal">
+                <div class="glass rounded-2xl p-8 text-center glow-blue">
+                    <div class="text-4xl font-display font-bold gradient-text counter" data-target="100">0</div>
+                    <div class="text-sm text-muted mt-2">Projects Delivered</div>
+                </div>
+                <div class="glass rounded-2xl p-8 text-center glow-cyan">
+                    <div class="text-4xl font-display font-bold gradient-text counter" data-target="20">0</div>
+                    <div class="text-sm text-muted mt-2">Core Technologies</div>
+                </div>
+                <div class="glass rounded-2xl p-8 text-center glow-purple">
+                    <div class="text-4xl font-display font-bold gradient-text">99.9<span class="text-2xl">%</span></div>
+                    <div class="text-sm text-muted mt-2">Reliability</div>
+                </div>
+                <div class="glass rounded-2xl p-8 text-center glow-blue">
+                    <div class="text-4xl font-display font-bold gradient-text">Global</div>
+                    <div class="text-sm text-muted mt-2">Collaboration</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-accent text-sm font-semibold uppercase tracking-widest">How We Work</span>
+                <h2 class="font-display font-bold text-4xl lg:text-5xl mt-4 mb-6">Our Process</h2>
+                <p class="text-muted text-lg max-w-2xl mx-auto">A proven methodology that ensures scientific rigor and engineering excellence.</p>
+            </div>
+
+            <div class="relative">
+                <!-- Timeline Line -->
+                <div class="hidden lg:block absolute left-1/2 top-0 bottom-0 w-0.5 timeline-line transform -translate-x-1/2"></div>
+
+                <div class="space-y-12 lg:space-y-0">
+                    <!-- Step 1 -->
+                    <div class="relative lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center reveal">
+                        <div class="lg:text-right lg:pr-16 mb-4 lg:mb-0">
+                            <span class="text-accent text-sm font-semibold">01</span>
+                            <h3 class="font-display font-semibold text-2xl mt-2 mb-3">Discovery</h3>
+                            <p class="text-muted">Understanding your requirements, constraints, and scientific goals through deep consultation and domain research.</p>
+                        </div>
+                        <div class="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                            <div class="w-4 h-4 rounded-full bg-accent timeline-dot"></div>
+                        </div>
+                        <div class="lg:pl-16">
+                            <div class="glass rounded-2xl p-6 glow-blue">
+                                <svg class="w-full h-32" viewBox="0 0 300 120" fill="none">
+                                    <circle cx="60" cy="60" r="30" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+                                    <circle cx="60" cy="60" r="15" fill="rgba(59,130,246,0.3)"/>
+                                    <text x="55" y="110" fill="rgba(255,255,255,0.6)" font-size="10" font-family="Inter">Requirements</text>
+                                    <line x1="90" y1="60" x2="120" y2="60" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="4"/>
+                                    <circle cx="150" cy="60" r="30" fill="rgba(6,182,212,0.1)" stroke="rgba(6,182,212,0.3)" stroke-width="1"/>
+                                    <circle cx="150" cy="60" r="15" fill="rgba(6,182,212,0.3)"/>
+                                    <text x="140" y="110" fill="rgba(255,255,255,0.6)" font-size="10" font-family="Inter">Analysis</text>
+                                    <line x1="180" y1="60" x2="210" y2="60" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="4"/>
+                                    <circle cx="240" cy="60" r="30" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.3)" stroke-width="1"/>
+                                    <circle cx="240" cy="60" r="15" fill="rgba(139,92,246,0.3)"/>
+                                    <text x="230" y="110" fill="rgba(255,255,255,0.6)" font-size="10" font-family="Inter">Goals</text>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="relative lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center lg:mt-16 reveal">
+                        <div class="lg:order-2 lg:pl-16 mb-4 lg:mb-0">
+                            <span class="text-cyan text-sm font-semibold">02</span>
+                            <h3 class="font-display font-semibold text-2xl mt-2 mb-3">Research</h3>
+                            <p class="text-muted">Scientific analysis and planning. Literature review, feasibility studies, and experimental design.</p>
+                        </div>
+                        <div class="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                            <div class="w-4 h-4 rounded-full bg-cyan timeline-dot"></div>
+                        </div>
+                        <div class="lg:order-1 lg:text-right lg:pr-16">
+                            <div class="glass rounded-2xl p-6 glow-cyan">
+                                <svg class="w-full h-32" viewBox="0 0 300 120" fill="none">
+                                    <rect x="40" y="30" width="60" height="60" rx="8" fill="rgba(6,182,212,0.1)" stroke="rgba(6,182,212,0.3)" stroke-width="1"/>
+                                    <text x="50" y="55" fill="rgba(255,255,255,0.7)" font-size="8" font-family="Inter">Literature</text>
+                                    <text x="50" y="70" fill="rgba(255,255,255,0.7)" font-size="8" font-family="Inter">Review</text>
+                                    <line x1="100" y1="60" x2="130" y2="60" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="4"/>
+                                    <rect x="130" y="30" width="60" height="60" rx="8" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+                                    <text x="140" y="55" fill="rgba(255,255,255,0.7)" font-size="8" font-family="Inter">Feasibility</text>
+                                    <text x="140" y="70" fill="rgba(255,255,255,0.7)" font-size="8" font-family="Inter">Study</text>
+                                    <line x1="190" y1="60" x2="220" y2="60" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="4"/>
+                                    <rect x="220" y="30" width="60" height="60" rx="8" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.3)" stroke-width="1"/>
+                                    <text x="230" y="55" fill="rgba(255,255,255,0.7)" font-size="8" font-family="Inter">Experiment</text>
+                                    <text x="230" y="70" fill="rgba(255,255,255,0.7)" font-size="8" font-family="Inter">Design</text>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="relative lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center lg:mt-16 reveal">
+                        <div class="lg:text-right lg:pr-16 mb-4 lg:mb-0">
+                            <span class="text-purple text-sm font-semibold">03</span>
+                            <h3 class="font-display font-semibold text-2xl mt-2 mb-3">Design</h3>
+                            <p class="text-muted">Architecture and prototyping. System design, UI/UX mockups, and technical specification.</p>
+                        </div>
+                        <div class="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                            <div class="w-4 h-4 rounded-full bg-purple timeline-dot"></div>
+                        </div>
+                        <div class="lg:pl-16">
+                            <div class="glass rounded-2xl p-6 glow-purple">
+                                <svg class="w-full h-32" viewBox="0 0 300 120" fill="none">
+                                    <rect x="50" y="30" width="80" height="60" rx="6" fill="rgba(139,92,246,0.1)" stroke="rgba(139,92,246,0.3)" stroke-width="1"/>
+                                    <rect x="60" y="40" width="60" height="8" rx="2" fill="rgba(139,92,246,0.3)"/>
+                                    <rect x="60" y="52" width="40" height="8" rx="2" fill="rgba(139,92,246,0.2)"/>
+                                    <rect x="60" y="64" width="50" height="8" rx="2" fill="rgba(139,92,246,0.2)"/>
+                                    <text x="70" y="110" fill="rgba(255,255,255,0.6)" font-size="10" font-family="Inter">Architecture</text>
+                                    <line x1="130" y1="60" x2="160" y2="60" stroke="rgba(255,255,255,0.2)" stroke-width="1" stroke-dasharray="4"/>
+                                    <rect x="170" y="30" width="80" height="60" rx="6" fill="rgba(59,130,246,0.1)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+                                    <circle cx="210" cy="55" r="15" fill="rgba(59,130,246,0.3)"/>
+                                    <text x="185" y="110" fill="rgba(255,255,255,0.6)" font-size="10" font-family="Inter">Prototype</text>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="relative lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center lg:mt-16 reveal">
+                        <div class="lg:order-2 lg:pl-16 mb-4 lg:mb-0">
+                            <span class="text-accent text-sm font-semibold">04</span>
+                            <h3 class="font-display font-semibold text-2xl mt-2 mb-3">Development</h3>
+                            <p class="text-muted">Implementation and testing. Agile sprints, continuous integration, and rigorous QA.</p>
+                        </div>
+                        <div class="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                            <div class="w-4 h-4 rounded-full bg-accent timeline-dot"></div>
+                        </div>
+                        <div class="lg:order-1 lg:text-right lg:pr-16">
+                            <div class="glass rounded-2xl p-6 glow-blue">
+                                <svg class="w-full h-32" viewBox="0 0 300 120" fill="none">
+                                    <rect x="30" y="40" width="50" height="40" rx="4" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+                                    <text x="40" y="65" fill="white" font-size="8" font-family="Inter">Sprint 1</text>
+                                    <rect x="90" y="40" width="50" height="40" rx="4" fill="rgba(6,182,212,0.15)" stroke="rgba(6,182,212,0.3)" stroke-width="1"/>
+                                    <text x="100" y="65" fill="white" font-size="8" font-family="Inter">Sprint 2</text>
+                                    <rect x="150" y="40" width="50" height="40" rx="4" fill="rgba(139,92,246,0.15)" stroke="rgba(139,92,246,0.3)" stroke-width="1"/>
+                                    <text x="160" y="65" fill="white" font-size="8" font-family="Inter">Sprint 3</text>
+                                    <rect x="210" y="40" width="50" height="40" rx="4" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.3)" stroke-width="1"/>
+                                    <text x="220" y="65" fill="white" font-size="8" font-family="Inter">Sprint 4</text>
+                                    <line x1="80" y1="60" x2="90" y2="60" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                                    <line x1="140" y1="60" x2="150" y2="60" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                                    <line x1="200" y1="60" x2="210" y2="60" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 5 -->
+                    <div class="relative lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center lg:mt-16 reveal">
+                        <div class="lg:text-right lg:pr-16 mb-4 lg:mb-0">
+                            <span class="text-cyan text-sm font-semibold">05</span>
+                            <h3 class="font-display font-semibold text-2xl mt-2 mb-3">Deployment</h3>
+                            <p class="text-muted">Cloud and infrastructure setup. CI/CD pipelines, monitoring, and security hardening.</p>
+                        </div>
+                        <div class="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                            <div class="w-4 h-4 rounded-full bg-cyan timeline-dot"></div>
+                        </div>
+                        <div class="lg:pl-16">
+                            <div class="glass rounded-2xl p-6 glow-cyan">
+                                <svg class="w-full h-32" viewBox="0 0 300 120" fill="none">
+                                    <rect x="100" y="30" width="100" height="60" rx="8" fill="rgba(6,182,212,0.1)" stroke="rgba(6,182,212,0.3)" stroke-width="1"/>
+                                    <circle cx="130" cy="50" r="6" fill="rgba(6,182,212,0.6)"/>
+                                    <circle cx="150" cy="50" r="6" fill="rgba(6,182,212,0.6)"/>
+                                    <circle cx="170" cy="50" r="6" fill="rgba(6,182,212,0.6)"/>
+                                    <rect x="120" y="65" width="60" height="4" rx="2" fill="rgba(6,182,212,0.4)"/>
+                                    <rect x="120" y="73" width="40" height="4" rx="2" fill="rgba(6,182,212,0.3)"/>
+                                    <line x1="150" y1="90" x2="150" y2="105" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                                    <circle cx="150" cy="110" r="4" fill="rgba(59,130,246,0.6)"/>
+                                    <text x="130" y="120" fill="rgba(255,255,255,0.6)" font-size="8" font-family="Inter">Cloud</text>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 6 -->
+                    <div class="relative lg:grid lg:grid-cols-2 lg:gap-16 lg:items-center lg:mt-16 reveal">
+                        <div class="lg:order-2 lg:pl-16 mb-4 lg:mb-0">
+                            <span class="text-purple text-sm font-semibold">06</span>
+                            <h3 class="font-display font-semibold text-2xl mt-2 mb-3">Continuous Improvement</h3>
+                            <p class="text-muted">Optimization and scaling. Performance tuning, feature expansion, and ongoing support.</p>
+                        </div>
+                        <div class="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+                            <div class="w-4 h-4 rounded-full bg-purple timeline-dot"></div>
+                        </div>
+                        <div class="lg:order-1 lg:text-right lg:pr-16">
+                            <div class="glass rounded-2xl p-6 glow-purple">
+                                <svg class="w-full h-32" viewBox="0 0 300 120" fill="none">
+                                    <path d="M50,60 Q100,30 150,60 Q200,90 250,60" stroke="url(#improveGrad)" stroke-width="2" fill="none"/>
+                                    <circle cx="50" cy="60" r="6" fill="#3B82F6"/>
+                                    <circle cx="100" cy="45" r="6" fill="#06B6D4"/>
+                                    <circle cx="150" cy="60" r="6" fill="#8B5CF6"/>
+                                    <circle cx="200" cy="75" r="6" fill="#3B82F6"/>
+                                    <circle cx="250" cy="60" r="6" fill="#06B6D4"/>
+                                    <defs>
+                                        <linearGradient id="improveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                                            <stop offset="0%" style="stop-color:#3B82F6"/>
+                                            <stop offset="50%" style="stop-color:#8B5CF6"/>
+                                            <stop offset="100%" style="stop-color:#06B6D4"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <text x="110" y="100" fill="rgba(255,255,255,0.6)" font-size="10" font-family="Inter">Continuous Growth</text>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose SilioMind -->
+    <section id="about" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-accent text-sm font-semibold uppercase tracking-widest">Why Us</span>
+                <h2 class="font-display font-bold text-4xl lg:text-5xl mt-4 mb-6">Why Choose SilioMind</h2>
+                <p class="text-muted text-lg max-w-2xl mx-auto">We combine scientific rigor with engineering excellence to deliver transformative solutions.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 stagger-children" id="why-grid">
+                <div class="animated-border glass rounded-2xl p-8 relative">
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-6">
+                            <svg class="w-7 h-7 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+                        </div>
+                        <h3 class="font-display font-semibold text-xl mb-3">Scientific Precision</h3>
+                        <p class="text-muted text-sm">Research-driven engineering. Every solution is grounded in scientific methodology and validated against real-world data.</p>
+                    </div>
+                </div>
+
+                <div class="animated-border glass rounded-2xl p-8 relative">
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-cyan/10 flex items-center justify-center mb-6">
+                            <svg class="w-7 h-7 text-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                        </div>
+                        <h3 class="font-display font-semibold text-xl mb-3">AI Expertise</h3>
+                        <p class="text-muted text-sm">Advanced machine intelligence solutions. From foundational models to specialized domain applications, we lead in AI innovation.</p>
+                    </div>
+                </div>
+
+                <div class="animated-border glass rounded-2xl p-8 relative">
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-purple/10 flex items-center justify-center mb-6">
+                            <svg class="w-7 h-7 text-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 3v11.25A2.25 2.25 0 006 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0118 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.061 12.061 0 0116.5 7.605"/></svg>
+                        </div>
+                        <h3 class="font-display font-semibold text-xl mb-3">Scalable Architecture</h3>
+                        <p class="text-muted text-sm">Enterprise-grade systems designed to grow with your needs. From startup to Fortune 500, we build for scale.</p>
+                    </div>
+                </div>
+
+                <div class="animated-border glass rounded-2xl p-8 relative">
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-6">
+                            <svg class="w-7 h-7 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.813 15.904L9 18.75l-.813-2.846a4.002 4.002 0 00-3.09-3.09L2.25 12l2.846-.813a4.002 4.002 0 003.09-3.09L9 5.25l.813 2.846a4.002 4.002 0 003.09 3.09L15.75 12l-2.846.813a4.002 4.002 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"/></svg>
+                        </div>
+                        <h3 class="font-display font-semibold text-xl mb-3">Innovation First</h3>
+                        <p class="text-muted text-sm">Cutting-edge technologies and methodologies. We stay ahead of the curve so you don't have to.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies Section -->
+    <section class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-accent/5 via-transparent to-cyan/5 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <span class="text-accent text-sm font-semibold uppercase tracking-widest">Case Studies</span>
+                <h2 class="font-display font-bold text-4xl lg:text-5xl mt-4 mb-6">Proven Impact</h2>
+                <p class="text-muted text-lg max-w-2xl mx-auto">Real results from real collaborations.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 stagger-children" id="case-studies-grid">
+                <!-- Case Study 1 -->
+                <div class="card-hover glass rounded-2xl overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-accent/20 to-cyan/20 relative p-6 flex items-end">
+                        <svg class="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 400 200" fill="none">
+                            <rect x="40" y="120" width="40" height="60" rx="4" fill="#3B82F6"/>
+                            <rect x="100" y="80" width="40" height="100" rx="4" fill="#06B6D4"/>
+                            <rect x="160" y="40" width="40" height="140" rx="4" fill="#8B5CF6"/>
+                            <rect x="220" y="60" width="40" height="120" rx="4" fill="#3B82F6"/>
+                            <rect x="280" y="20" width="40" height="160" rx="4" fill="#06B6D4"/>
+                            <rect x="340" y="100" width="40" height="80" rx="4" fill="#8B5CF6"/>
+                        </svg>
+                        <div class="relative z-10">
+                            <div class="text-4xl font-display font-bold text-white">95%</div>
+                            <div class="text-sm text-white/80">Faster Analysis</div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-display font-semibold text-xl mb-2">AI Research Assistant</h3>
+                        <p class="text-muted text-sm mb-4">Document analysis and literature review automation for a leading research institution.</p>
+                        <div class="flex items-center gap-2 text-accent text-sm font-medium">
+                            <span>Read Case Study</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study 2 -->
+                <div class="card-hover glass rounded-2xl overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-purple/20 to-accent/20 relative p-6 flex items-end">
+                        <svg class="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 400 200" fill="none">
+                            <circle cx="80" cy="100" r="50" fill="none" stroke="#8B5CF6" stroke-width="2"/>
+                            <circle cx="80" cy="100" r="30" fill="none" stroke="#3B82F6" stroke-width="2"/>
+                            <circle cx="80" cy="100" r="10" fill="#06B6D4"/>
+                            <line x1="130" y1="100" x2="200" y2="100" stroke="rgba(255,255,255,0.3)" stroke-width="1" stroke-dasharray="4"/>
+                            <rect x="200" y="70" width="120" height="60" rx="8" fill="rgba(139,92,246,0.2)" stroke="rgba(139,92,246,0.4)" stroke-width="1"/>
+                            <text x="220" y="105" fill="white" font-size="12" font-family="Inter">70% Faster</text>
+                        </svg>
+                        <div class="relative z-10">
+                            <div class="text-4xl font-display font-bold text-white">70%</div>
+                            <div class="text-sm text-white/80">Time Reduction</div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-display font-semibold text-xl mb-2">Genome Analysis Platform</h3>
+                        <p class="text-muted text-sm mb-4">Cloud-based genomic pipeline reducing processing time for a biotech startup.</p>
+                        <div class="flex items-center gap-2 text-accent text-sm font-medium">
+                            <span>Read Case Study</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Case Study 3 -->
+                <div class="card-hover glass rounded-2xl overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-cyan/20 to-purple/20 relative p-6 flex items-end">
+                        <svg class="absolute inset-0 w-full h-full opacity-30" viewBox="0 0 400 200" fill="none">
+                            <rect x="40" y="60" width="320" height="100" rx="8" fill="rgba(6,182,212,0.1)" stroke="rgba(6,182,212,0.3)" stroke-width="1"/>
+                            <line x1="60" y1="80" x2="340" y2="80" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <line x1="60" y1="100" x2="340" y2="100" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <line x1="60" y1="120" x2="340" y2="120" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <line x1="60" y1="140" x2="340" y2="140" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+                            <polyline points="60,130 100,110 140,120 180,90 220,100 260,80 300,85 340,70" fill="none" stroke="url(#chartLine)" stroke-width="2"/>
+                            <circle cx="340" cy="70" r="5" fill="#3B82F6"/>
+                            <defs>
+                                <linearGradient id="chartLine" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" style="stop-color:#06B6D4"/>
+                                    <stop offset="100%" style="stop-color:#3B82F6"/>
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <div class="relative z-10">
+                            <div class="text-4xl font-display font-bold text-white">10M+</div>
+                            <div class="text-sm text-white/80">Daily Requests</div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="font-display font-semibold text-xl mb-2">Enterprise Data Platform</h3>
+                        <p class="text-muted text-sm mb-4">Scalable data infrastructure handling millions of requests for a Fortune 500 client.</p>
+                        <div class="flex items-center gap-2 text-accent text-sm font-medium">
+                            <span>Read Case Study</span>
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-accent text-sm font-semibold uppercase tracking-widest">Testimonials</span>
+                <h2 class="font-display font-bold text-4xl lg:text-5xl mt-4 mb-6">What Our Clients Say</h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-6 stagger-children" id="testimonials-grid">
+                <div class="glass rounded-2xl p-8 relative glow-blue">
+                    <div class="quote-mark absolute top-4 right-6 text-accent">"</div>
+                    <p class="text-muted mb-6 relative z-10">"SilioMind transformed our research workflow. Their AI platform reduced our literature review time by 95% while improving accuracy."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-accent to-cyan flex items-center justify-center font-bold text-white">DR</div>
+                        <div>
+                            <div class="font-semibold text-sm">Dr. Rachel Chen</div>
+                            <div class="text-xs text-muted">Principal Investigator, BioTech Labs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass rounded-2xl p-8 relative glow-cyan">
+                    <div class="quote-mark absolute top-4 right-6 text-cyan">"</div>
+                    <p class="text-muted mb-6 relative z-10">"The bioinformatics pipeline they built handles our entire genomic analysis workflow. What used to take weeks now completes in days."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-cyan to-purple flex items-center justify-center font-bold text-white">JM</div>
+                        <div>
+                            <div class="font-semibold text-sm">James Mitchell</div>
+                            <div class="text-xs text-muted">CTO, Genomics Startup</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass rounded-2xl p-8 relative glow-purple">
+                    <div class="quote-mark absolute top-4 right-6 text-purple">"</div>
+                    <p class="text-muted mb-6 relative z-10">"Their scientific computing expertise is unmatched. They built a simulation platform that scales seamlessly across our HPC cluster."</p>
+                    <div class="flex items-center gap-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple to-accent flex items-center justify-center font-bold text-white">SK</div>
+                        <div>
+                            <div class="font-semibold text-sm">Dr. Sarah Kim</div>
+                            <div class="text-xs text-muted">Research Director, University</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-purple/5 via-transparent to-accent/5 pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <span class="text-accent text-sm font-semibold uppercase tracking-widest">Insights</span>
+                <h2 class="font-display font-bold text-4xl lg:text-5xl mt-4 mb-6">Blog & Insights</h2>
+                <p class="text-muted text-lg max-w-2xl mx-auto">Latest thoughts on AI, software engineering, and scientific computing.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children" id="blog-grid">
+                <article class="blog-card card-hover glass rounded-2xl overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-accent/30 to-cyan/30 relative overflow-hidden">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <svg class="w-20 h-20 text-white/20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="px-3 py-1 rounded-full bg-accent/20 text-accent text-xs font-medium">AI</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-xs text-muted mb-2">June 15, 2026</div>
+                        <h3 class="font-display font-semibold text-lg mb-2">The Future of LLMs in Scientific Research</h3>
+                        <p class="text-muted text-sm mb-4">How large language models are transforming literature review, hypothesis generation, and experimental design.</p>
+                        <a href="#" class="text-accent text-sm font-medium flex items-center gap-2">Read More <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+                    </div>
+                </article>
+
+                <article class="blog-card card-hover glass rounded-2xl overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-cyan/30 to-purple/30 relative overflow-hidden">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <svg class="w-20 h-20 text-white/20" fill="currentColor" viewBox="0 0 24 24"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="px-3 py-1 rounded-full bg-cyan/20 text-cyan text-xs font-medium">Software Engineering</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-xs text-muted mb-2">June 10, 2026</div>
+                        <h3 class="font-display font-semibold text-lg mb-2">Building Resilient Microservices at Scale</h3>
+                        <p class="text-muted text-sm mb-4">Patterns and practices for designing fault-tolerant distributed systems in scientific computing environments.</p>
+                        <a href="#" class="text-cyan text-sm font-medium flex items-center gap-2">Read More <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+                    </div>
+                </article>
+
+                <article class="blog-card card-hover glass rounded-2xl overflow-hidden">
+                    <div class="h-48 bg-gradient-to-br from-purple/30 to-accent/30 relative overflow-hidden">
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <svg class="w-20 h-20 text-white/20" fill="currentColor" viewBox="0 0 24 24"><path d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                        </div>
+                        <div class="absolute top-4 left-4">
+                            <span class="px-3 py-1 rounded-full bg-purple/20 text-purple text-xs font-medium">Bioinformatics</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="text-xs text-muted mb-2">June 5, 2026</div>
+                        <h3 class="font-display font-semibold text-lg mb-2">Next-Generation Sequencing Pipeline Optimization</h3>
+                        <p class="text-muted text-sm mb-4">Strategies for reducing computational costs while maintaining accuracy in genomic analysis workflows.</p>
+                        <a href="#" class="text-purple text-sm font-medium flex items-center gap-2">Read More <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg></a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-24 relative">
+        <div class="max-w-3xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <span class="text-accent text-sm font-semibold uppercase tracking-widest">FAQ</span>
+                <h2 class="font-display font-bold text-4xl lg:text-5xl mt-4 mb-6">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="space-y-4 reveal">
+                <div class="faq-item glass rounded-2xl overflow-hidden">
+                    <button class="faq-trigger w-full px-6 py-5 flex items-center justify-between text-left">
+                        <span class="font-semibold">What services does SilioMind provide?</span>
+                        <svg class="faq-icon w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-content px-6 pb-5">
+                        <p class="text-muted text-sm">SilioMind provides comprehensive AI and scientific computing services including custom LLM development, bioinformatics pipelines, scientific software platforms, cloud architecture, and enterprise-scale data systems. We specialize in bridging the gap between cutting-edge research and production-ready software.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item glass rounded-2xl overflow-hidden">
+                    <button class="faq-trigger w-full px-6 py-5 flex items-center justify-between text-left">
+                        <span class="font-semibold">Do you work with research institutions?</span>
+                        <svg class="faq-icon w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-content px-6 pb-5">
+                        <p class="text-muted text-sm">Absolutely. We collaborate extensively with universities, research labs, and government research organizations. Our team understands the unique requirements of academic research including reproducibility, open-source alignment, and grant compliance.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item glass rounded-2xl overflow-hidden">
+                    <button class="faq-trigger w-full px-6 py-5 flex items-center justify-between text-left">
+                        <span class="font-semibold">Can you build custom AI systems?</span>
+                        <svg class="faq-icon w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-content px-6 pb-5">
+                        <p class="text-muted text-sm">Yes, custom AI system development is one of our core competencies. We build domain-specific models, RAG systems, AI agents, and computer vision solutions tailored to your specific scientific or business needs.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item glass rounded-2xl overflow-hidden">
+                    <button class="faq-trigger w-full px-6 py-5 flex items-center justify-between text-left">
+                        <span class="font-semibold">Do you support bioinformatics projects?</span>
+                        <svg class="faq-icon w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-content px-6 pb-5">
+                        <p class="text-muted text-sm">Bioinformatics is a key focus area. We develop end-to-end genomic analysis pipelines, transcriptomics workflows, sequence analysis tools, and specialized visualization platforms for biological data.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item glass rounded-2xl overflow-hidden">
+                    <button class="faq-trigger w-full px-6 py-5 flex items-center justify-between text-left">
+                        <span class="font-semibold">What technologies do you use?</span>
+                        <svg class="faq-icon w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="faq-content px-6 pb-5">
+                        <p class="text-muted text-sm">Our stack includes Python, PyTorch, TensorFlow, LangChain, FastAPI, Django, PostgreSQL, Redis, Docker, Kubernetes, and cloud platforms (AWS, GCP, Azure). We also use specialized scientific tools like Biopython, R, and various bioinformatics suites.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="contact" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0">
+            <div class="orb w-96 h-96 bg-accent/20 top-0 -left-48" style="animation-delay: 0s;"></div>
+            <div class="orb w-80 h-80 bg-purple/20 bottom-0 -right-40" style="animation-delay: 2s;"></div>
+            <div class="orb w-64 h-64 bg-cyan/20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style="animation-delay: 4s;"></div>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-6 lg:px-8 relative z-10 text-center reveal">
+            <h2 class="font-display font-bold text-4xl lg:text-6xl mb-6">Build the Future with Intelligence</h2>
+            <p class="text-xl text-muted mb-10 max-w-2xl mx-auto">Transform ideas into scalable AI and scientific solutions with SilioMind. Let's engineer intelligence together.</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#" class="btn-primary px-10 py-4 rounded-xl font-semibold text-white text-lg">Start Your Project</a>
+                <a href="#" class="btn-secondary px-10 py-4 rounded-xl font-semibold text-white text-lg">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- Company -->
+                <div>
+                    <div class="flex items-center gap-3 mb-6">
+                        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-cyan flex items-center justify-center">
+                            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+                            </svg>
+                        </div>
+                        <span class="font-display font-bold text-xl">SilioMind</span>
+                    </div>
+                    <p class="text-muted text-sm mb-6">Engineering Intelligence for Science, Software, and Discovery.</p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-accent/20 hover:text-accent transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-accent/20 hover:text-accent transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-accent/20 hover:text-accent transition-colors">
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center hover:bg-accent/20 hover:text-accent transition-colors">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Services -->
+                <div>
+                    <h4 class="font-semibold mb-6">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-muted text-sm hover:text-white transition-colors">Artificial Intelligence</a></li>
+                        <li><a href="#" class="text-muted text-sm hover:text-white transition-colors">Software Engineering</a></li>
+                        <li><a href="#" class="text-muted text-sm hover:text-white transition-colors">Bioinformatics</a></li>
+                        <li><a href="#" class="text-muted text-sm hover:text-white transition-colors">Scientific Computing</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company -->
+                <div>
+                    <h4 class="font-semibold mb-6">Company</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-muted text-sm hover:text-white transition-colors">About</a></li>
+                        <li><a href="#" class="text-muted text-sm hover:text-white transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-muted text-sm hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-muted text-sm hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Resources -->
+                <div>
+                    <h4 class="font-semibold mb-6">Resources</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-muted text-sm hover:text-white transition-colors">Documentation</a></li>
+                        <li><a href="#" class="text-muted text-sm hover:text-white transition-colors">Research</a></li>
+                        <li><a href="#" class="text-muted text-sm hover:text-white transition-colors">Articles</a></li>
+                        <li><a href="#" class="text-muted text-sm hover:text-white transition-colors">Case Studies</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="section-divider mb-8"></div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-sm text-muted">&copy; 2026 SilioMind. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="text-sm text-muted hover:text-white transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-sm text-muted hover:text-white transition-colors">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        const navbar = document.getElementById('navbar');
+        let lastScroll = 0;
+
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+
+            if (currentScroll > 50) {
+                navbar.classList.add('glass-strong');
+            } else {
+                navbar.classList.remove('glass-strong');
+            }
+
+            lastScroll = currentScroll;
+        });
+
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = '';
+        });
+
+        // Close mobile menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                document.body.style.overflow = '';
+            });
+        });
+
+        // Scroll reveal animation
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Stagger children animation
+        const staggerContainers = document.querySelectorAll('.stagger-children');
+        const staggerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        staggerContainers.forEach(el => staggerObserver.observe(el));
+
+        // FAQ Accordion
+        document.querySelectorAll('.faq-trigger').forEach(trigger => {
+            trigger.addEventListener('click', () => {
+                const item = trigger.parentElement;
+                const isActive = item.classList.contains('active');
+
+                // Close all
+                document.querySelectorAll('.faq-item').forEach(faq => {
+                    faq.classList.remove('active');
+                });
+
+                // Open clicked if not already active
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        });
+
+        // Counter animation
+        const counters = document.querySelectorAll('.counter');
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.dataset.target);
+                    let current = 0;
+                    const increment = target / 50;
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= target) {
+                            counter.textContent = target + '+';
+                            clearInterval(timer);
+                        } else {
+                            counter.textContent = Math.floor(current) + '+';
+                        }
+                    }, 30);
+                    counterObserver.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => counterObserver.observe(counter));
+
+        // Neural Network Canvas Animation
+        const canvas = document.getElementById('neural-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        let mouseX = 0, mouseY = 0;
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2 + 1;
+            }
+
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+
+                // Mouse interaction
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 200) {
+                    this.vx += dx * 0.0001;
+                    this.vy += dy * 0.0001;
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(59, 130, 246, 0.5)';
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 60; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateCanvas() {
+            ctx.clearRect(0, 0, width, height);
+
+            particles.forEach((p, i) => {
+                p.update();
+                p.draw();
+
+                // Draw connections
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = p.x - particles[j].x;
+                    const dy = p.y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(p.x, p.y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.strokeStyle = `rgba(59, 130, 246, ${0.15 * (1 - dist / 150)})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            });
+
+            requestAnimationFrame(animateCanvas);
+        }
+
+        animateCanvas();
+
+        document.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        // Floating particles in hero
+        const particlesContainer = document.getElementById('particles-container');
+        for (let i = 0; i < 20; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const size = Math.random() * 4 + 2;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.background = `rgba(${Math.random() > 0.5 ? '59, 130, 246' : Math.random() > 0.5 ? '6, 182, 212' : '139, 92, 246'}, ${Math.random() * 0.3 + 0.2})`;
+            particle.style.animation = `float ${Math.random() * 10 + 10}s ease-in-out infinite`;
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Theme toggle (placeholder)
+        document.getElementById('theme-toggle').addEventListener('click', () => {
+            // Animation feedback
+            const btn = document.getElementById('theme-toggle');
+            btn.style.transform = 'rotate(180deg)';
+            setTimeout(() => {
+                btn.style.transform = 'rotate(0deg)';
+            }, 300);
+        });
+    </script>
+</body>
+</html>
